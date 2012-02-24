@@ -8,8 +8,7 @@
 
 					axis.doc, axis.doc_node, axis.doc_type,
 
-					axis.doc_ix,
-					axis.doc_level,
+					axis.doc_ix, axis.doc_level,
 
 					axis.prototype
 
@@ -25,7 +24,7 @@
 				<axis-node-join>
 					<axis-relation>
 						<sql><![CDATA[
-							axis.doc_ix in (select max(doc_ix) from doc_node where doc = base.doc and doc_ix < base.doc_ix) group by doc_level)
+							axis.doc_ix in (select max(doc_ix) from doc_node where doc = base.doc and doc_ix < base.doc_ix group by doc_level)
 						]]></sql>
 					</axis-relation>
 				</axis-node-join>
@@ -37,7 +36,7 @@
 				<axis-node-join>
 					<axis-relation>
 						<sql><![CDATA[
-							axis.doc_ix in (select max(doc_ix) from doc_node where doc = base.doc and doc_ix <= base.doc_ix) group by doc_level)
+							axis.doc_ix in (select max(doc_ix) from doc_node where doc = base.doc and doc_ix <= base.doc_ix group by doc_level)
 						]]></sql>
 					</axis-relation>
 				</axis-node-join>
@@ -67,7 +66,7 @@
 				<axis-node-join>
 					<axis-relation>
 						<sql><![CDATA[
-							axis_node.doc_ix
+							axis.doc_ix
 								between base.doc_ix + 1
 									and coalesce(
 										(select min(doc_ix) from doc_node where doc = base.doc and doc_level = base.doc_level and doc_ix > base.doc_ix),
@@ -84,7 +83,7 @@
 				<axis-node-join>
 					<axis-relation>
 						<sql><![CDATA[
-							axis_node.doc_ix
+							axis.doc_ix
 								between base.doc_ix
 									and coalesce(
 										(select min(doc_ix) from doc_node where doc = base.doc and doc_level = base.doc_level and doc_ix > base.doc_ix),
@@ -131,7 +130,7 @@
 				<axis-node-join>
 					<axis-relation>
 						<sql><![CDATA[
-							axis.doc_ix = (select max(doc_ix) from doc_node where doc = base.doc and doc_level = base.doc_level - 1 and doc_ix < base.doc_ix),
+							axis.doc_ix = (select max(doc_ix) from doc_node where doc = base.doc and doc_level = base.doc_level - 1 and doc_ix < base.doc_ix)
 						]]></sql>
 					</axis-relation>
 				</axis-node-join>
@@ -157,7 +156,7 @@
 						<sql><![CDATA[
 							axis.doc_level = base.doc_level
 							and axis.doc_ix
-								between (select max(doc_ix) + 1 from doc_node where doc = base.doc and doc_level = base.doc_level - 1 and doc_ix < base.doc_ix),
+								between (select max(doc_ix) + 1 from doc_node where doc = base.doc and doc_level = base.doc_level - 1 and doc_ix < base.doc_ix)
 									and base.doc_ix
 						]]></sql>
 					</axis-relation>
@@ -174,8 +173,7 @@
 
 					doc, doc_node, doc_type,
 
-					doc_ix,
-					doc_level,
+					doc_ix,	doc_level,
 
 					prototype
 
